@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+</head>
+<script>
+    let versions = window.app.versions();
+</script>
+
+<body style="background: white;">
+<h1>Hello World!</h1>
+<p>
+    We are using node
+    <script>document.write(versions.node)</script>
+    ,
+    Chrome
+    <script>document.write(versions.chrome)</script>
+    ,
+    and Electron
+    <script>document.write(versions.electron)</script>
+    .
+</p>
+</body>
+</html>
