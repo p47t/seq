@@ -7,16 +7,6 @@
     <script src="d3.min.js"></script>
     <meta name="viewport" content="width=device-width">
 </head>
-<script>
-    let versions = window.app.versions();
-
-    function loadFile() {
-        window.app.load().then(messages => {
-            document.querySelector("#loaded").innerHTML = JSON.stringify(messages, null, 2);
-            renderSeq(messages)
-        });
-    }
-</script>
 
 <style> /* set the CSS */
 body {
@@ -33,25 +23,15 @@ body {
 }
 </style>
 
-<body style="background: white;">
-<p>
-    We are using node
-    <script>document.write(versions.node)</script>
-    ,
-    Chrome
-    <script>document.write(versions.chrome)</script>
-    ,
-    and Electron
-    <script>document.write(versions.electron)</script>
-    .
-</p>
-<div id="loaded"></div>
-<p>
-    <button onclick="loadFile()">Open</button>
-</p>
-
-<div id="drawArea"></div>
 <script id="jsbin-javascript">
+    let versions = window.app.versions();
+
+    function loadFile() {
+        window.app.load().then(messages => {
+            renderSeq(messages)
+        });
+    }
+
     function renderSeq(messages) {
         var classes = ["Class A", "Class B", "Class C", "Class D", "Class E", "Class F", "Class G"];
 
@@ -179,9 +159,25 @@ body {
             .attr("d", "M0,-5L10,0L0,5");
 
     }
-
-
 </script>
+
+<body style="background: white;">
+<p>
+    We are using node
+    <script>document.write(versions.node)</script>
+    ,
+    Chrome
+    <script>document.write(versions.chrome)</script>
+    ,
+    and Electron
+    <script>document.write(versions.electron)</script>
+    .
+</p>
+<p>
+    <button onclick="loadFile()">Open</button>
+</p>
+
+<div id="drawArea"></div>
 
 </body>
 </html>
