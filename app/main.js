@@ -2,7 +2,7 @@ const { app, ipcMain, BrowserWindow, dialog } = require('electron')
 
 const process = require('process')
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs/promises')
 
 let mainWindow;
 
@@ -43,6 +43,6 @@ ipcMain.handle('load', async (event, args) => {
     const chosen = await dialog.showOpenDialog(mainWindow, {
         properties: ['openFile', 'openDirectory']
     });
-    let content = fs.readFileSync(chosen.filePaths[0]);
+    let content = await fs.readFile(chosen.filePaths[0]);
     return JSON.parse(content.toString());
 })
