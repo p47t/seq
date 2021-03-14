@@ -1,11 +1,13 @@
-const { app, ipcMain, BrowserWindow } = require('electron')
+const { app, ipcMain, BrowserWindow, dialog } = require('electron')
 
 const process = require('process')
-const path = require("path");
+const path = require('path');
+const fs = require('fs')
+
+let mainWindow;
 
 function createWindow () {
-    console.log(path.resolve(__dirname, "preload.js"))
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
         webPreferences: {
@@ -13,7 +15,7 @@ function createWindow () {
         }
     })
 
-    win.loadFile('./app/index.html')
+    mainWindow.loadFile('./app/index.html')
 }
 
 app.on("ready", createWindow)
@@ -30,10 +32,17 @@ app.on('activate', () => {
     }
 })
 
-ipcMain.on('versions', (event) => {
+ipcMain.on('versions', (event, args) => {
     event.returnValue = {
         chrome: process.versions.chrome,
         electron: process.versions.electron,
         node: process.versions.node,
     }
+})
+ipcMain.handle('load', async (event, args) => {
+    const chosen = await dialog.showOpenDialog(mainWindow, {
+        properties: ['openFile', 'openDirectory']
+    });
+    let content = fs.readFileSync(chosen.filePaths[0]);
+    return JSON.parse(content.toString());
 })

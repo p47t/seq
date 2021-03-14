@@ -5,6 +5,7 @@ console.log(ipcRenderer)
 contextBridge.exposeInMainWorld(
     'app',
     {
-        versions: () => ipcRenderer.sendSync('versions')
+        versions: () => ipcRenderer.sendSync('versions'),
+        load: () => ipcRenderer.invoke('load'),
     }
 )

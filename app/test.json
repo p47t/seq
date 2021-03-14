@@ -1,0 +1,42 @@
+[
+  {
+    "start": 0,
+    "end": 2,
+    "message": "From A to C"
+  },
+  {
+    "start": 2,
+    "end": 3,
+    "message": "From C to D"
+  },
+  {
+    "start": 3,
+    "end": 4,
+    "message": "From D to E"
+  },
+  {
+    "start": 4,
+    "end": 3,
+    "message": "From E to D"
+  },
+  {
+    "start": 3,
+    "end": 6,
+    "message": "From D to G"
+  },
+  {
+    "start": 6,
+    "end": 3,
+    "message": "From G to D"
+  },
+  {
+    "start": 3,
+    "end": 2,
+    "message": "From D to C"
+  },
+  {
+    "start": 2,
+    "end": 0,
+    "message": "From C to A"
+  }
+]
