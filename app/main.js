@@ -1,12 +1,13 @@
-const { app, ipcMain, BrowserWindow, dialog } = require('electron')
+const {app, ipcMain, BrowserWindow, dialog} = require('electron')
 
 const process = require('process')
 const path = require('path');
 const fs = require('fs/promises')
+const ejs = require('ejs')
 
 let mainWindow;
 
-function createWindow () {
+function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
@@ -43,6 +44,24 @@ ipcMain.handle('load', async (event, args) => {
     const chosen = await dialog.showOpenDialog(mainWindow, {
         properties: ['openFile', 'openDirectory']
     });
+    if (chosen.canceled) {
+        return {};
+    }
+
     let content = await fs.readFile(chosen.filePaths[0]);
     return JSON.parse(content.toString());
+})
+ipcMain.on("export", async (event, args) => {
+    let chosen = await dialog.showSaveDialog({
+        filters: [
+            {name: 'HTML', extensions: ['html']},
+        ]
+    });
+    if (chosen.canceled) {
+        return {};
+    }
+
+    let template = (await fs.readFile(path.resolve(__dirname, "export.ejs"))).toString();
+    let messages = args;
+    await fs.writeFile(chosen.filePath, ejs.render(template, {messages: messages}));
 })

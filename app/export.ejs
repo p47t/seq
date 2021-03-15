@@ -3,41 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Sequence Diagram</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
-    <script src="d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <meta name="viewport" content="width=device-width">
 </head>
 
 <style> /* set the CSS */
-body {
-    font: 12px Arial;
-}
+    body {
+        font: 12px Arial;
+    }
 
-.tooltip {
-    position: absolute;
-    text-align: center;
-    padding: 8px;
-    background: lightsteelblue;
-    border-radius: 8px;
-    pointer-events: none;
-}
+    .tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 8px;
+        background: lightsteelblue;
+        border-radius: 8px;
+        pointer-events: none;
+    }
 </style>
 
-<script id="jsbin-javascript">
-    let appState = {
-        versions: window.app.versions()
-    };
-
-    function loadFile() {
-        window.app.load().then(messages => {
-            appState.messages = messages
-            renderSeq(messages)
-        });
-    }
-
-    function exportFile() {
-        window.app.export(appState.messages);
-    }
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        let messages = <%- JSON.stringify(messages) %>;
+        renderSeq(messages);
+    });
 
     function renderSeq(messages) {
         var classes = ["Class A", "Class B", "Class C", "Class D", "Class E", "Class F", "Class G"];
@@ -166,24 +155,8 @@ body {
     }
 </script>
 
-<body style="background: white;">
-<p>
-    We are using node
-    <script>document.write(appState.versions.node)</script>
-    ,
-    Chrome
-    <script>document.write(appState.versions.chrome)</script>
-    ,
-    and Electron
-    <script>document.write(appState.versions.electron)</script>
-    .
-</p>
-<p>
-    <button onclick="loadFile()">Open</button>
-    <button onclick="exportFile()">Export</button>
-</p>
-
+<body>
 <div id="drawArea"></div>
-
 </body>
+
 </html>
