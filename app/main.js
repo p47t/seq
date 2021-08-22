@@ -4,6 +4,7 @@ const process = require('process')
 const path = require('path');
 const fs = require('fs/promises')
 const ejs = require('ejs')
+const pako = require('pako');
 
 let mainWindow;
 
@@ -62,6 +63,7 @@ ipcMain.on("export", async (event, args) => {
     }
 
     let template = (await fs.readFile(path.resolve(__dirname, "export.ejs"))).toString();
-    let messages = args;
-    await fs.writeFile(chosen.filePath, ejs.render(template, {messages: messages}));
+    let compressed = pako.deflate(JSON.stringify(args));
+    let b64 = Buffer.from(compressed).toString('base64')
+    await fs.writeFile(chosen.filePath, ejs.render(template, {messages: b64}));
 })
